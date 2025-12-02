@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>종토방</title>
+    <style>
+      /* 검색/삭제 버튼에 공통으로 적용될 스타일 */
+      .search-form button,
+      .delete-button {
+        padding: 2px 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .results ul {
+        list-style: none; /* 기본 점 제거 */
+        padding-left: 0;
+      }
+
+      .results li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px; /* 댓글 사이 간격 */
+        position: relative;
+      }
+
+      .results li::before {
+        content: "•"; /* 점 문자 */
+        margin-right: 5px; /* 점과 댓글 사이 간격 */
+        color: black; /* 점 색상 */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p class="subtitle">주식에 대한, 투자자들의 목소리</p>
+
+      <div class="title-wrapper">
+        <div class="title-bar"></div>
+        <h1>주식 댓글 분석기</h1>
+      </div>
+
+      <form
+        class="search-form"
+        action="{% url 'crawlings:index' %}"
+        method="GET"
+      >
+        <label for="company-name">회사 이름을 입력하세요:</label>
+        <input
+          type="text"
+          id="company-name"
+          name="company_name"
+          value="{{ company_name | default:'' }}"
+        />
+        <button type="submit">검색</button>
+      </form>
+
+      {% if comments %}
+      <div class="results">
+        <h2>{{ company_name }} ({{ stock_code }})</h2>
+        <h3>수집된 댓글 :</h3>
+        <ul>
+          {% for comment in comments %}
+          <li>
+            <span>{{ comment.content }}</span>
+            <!-- --- 삭제 버튼 폼 추가 --- -->
+            <form
+              class="delete-form"
+              action="{% url 'crawlings:delete_comment' comment.id %}"
+              method="POST"
+            >
+              {% csrf_token %}
+              <!-- CSRF 보호를 위해 필수 -->
+              <button type="submit" class="delete-button">삭제</button>
+            </form>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
