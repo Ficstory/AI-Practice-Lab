@@ -1,6 +1,3 @@
-### 📋 2. Book-Data-Analysis/README.md
-
-```markdown
 # 📚 Intelligent Book Data Curation Service
 
 ## 📖 Project Overview
@@ -35,4 +32,5 @@
 ## 💡 Key Learnings
 * **API Integration**: 외부 Open API의 명세서를 분석하고, 인증 키(API Key)를 환경 변수(`.env`)로 안전하게 관리하는 법을 익혔습니다.
 * **Prompt Engineering**: LLM(거대언어모델)에게 정확한 분류 작업을 시키기 위해 프롬프트를 최적화하는 과정을 경험했습니다.
+
 * **Data Formatting**: JSON 응답 데이터를 파싱하여 원하는 필드만 추출하고 재가공하는 데이터 핸들링 역량을 키웠습니다.
